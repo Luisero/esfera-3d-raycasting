@@ -70,11 +70,20 @@ int main()
                 //P(t)= O + t*d 
                 
                 float disc = raySphereIntersect(posicaoObservador,d,esf.center,esf.radius);
+                Vector3 hitPoint(d.x*disc, d.y*disc, d.z*disc);
+                if(hitPoint.x !=0)
+                {
+
+                    std::cout << hitPoint.x << " " << hitPoint.y << " "<< hitPoint.z;
+                }
+                Vector3 posicaoLuz(-3,2,-5);
+                
+                
 
                 if(disc >0.f)
                 {
                     
-                    image<< disc*disc << " 100 50";
+                    image<< "200 100 50 ";
                 }
                 else{
 
