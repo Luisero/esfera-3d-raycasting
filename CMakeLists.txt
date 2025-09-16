@@ -1,5 +1,6 @@
 cmake_minimum_required(VERSION 3.10)
 
 project(main)
-
-add_executable(main src/main.cpp)
+file(GLOB SOURCES src/*.cpp)
+add_executable(main ${SOURCES})
+target_include_directories(main PRIVATE include)
