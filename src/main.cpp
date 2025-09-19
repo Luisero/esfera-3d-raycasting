@@ -83,7 +83,7 @@ int main()
                 if(disc >0.f)
                 {
                     
-                    image<< "200 100 50 ";
+                    image << disc*disc << "200 100 50 ";
                 }
                 else{
 
