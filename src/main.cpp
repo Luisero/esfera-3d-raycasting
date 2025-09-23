@@ -37,7 +37,7 @@ float raySphereIntersect(
     float t1 = (-b - sqrtD) * 0.5f;
     float t2 = (-b + sqrtD) * 0.5f;
 
-    float t = (t1 > 0) ? t1 : t2; // pega a interseção mais próxima positiva
+    float t = (t1 > t2) ? t2 : t1; // pega a interseção menor
     if (t < 0) return 0.0f; // está atrás do raio
 
     return t; // retorna a distância até a colisão
