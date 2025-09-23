@@ -49,7 +49,7 @@ float raySphereIntersect(const Vector3 &origin, const Vector3 &dir,
   float t1 = (-b - sqrtD) * 0.5f;
   float t2 = (-b + sqrtD) * 0.5f;
 
-  float t = (t1 > 0) ? t1 : t2;
+  float t = (t1 > t2) ? t2 : t1;
   if (t < 0)
     return 0.0f;
 
@@ -70,13 +70,13 @@ int main() {
     image << 255 << "\n";
 
     Vector3 posicaoLuz(3, 2, esf.center.z);
-    esf.center.z -= 15.f;
+    esf.center.z -= 10.f;
 
     while (Window.isOpen()) {
       Window.clear(sf::Color(19, 38, 66));
 
-      //    posicaoLuz.z += std::sin(timePassed) * 2.0f; // movimento da luz
-      //      posicaoLuz.x += std::cos(timePassed) * 3.f;
+          //posicaoLuz.z += std::sin(timePassed) * 2.0f; // movimento da luz
+        //    posicaoLuz.x += std::cos(timePassed) * 3.f;
       // esf.center.z += std::sin(timePassed) / 2.5f;
       timePassed += 0.1f;
 
