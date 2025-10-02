@@ -13,8 +13,8 @@ float dJanela = 10;
 std::string backgroundColor = "100 100 100 ";
 
 // Luz ambiente
-Point3 cor_esf(1, 0, 0);
-Point3 luz_amb(.09, .09, .09);
+Point3 cor_esf(.8, .1, .9);
+Point3 luz_amb(.03, .03, .03);
 Point3 cor_amb(cor_esf.x*luz_amb.x, cor_esf.y*luz_amb.y, cor_esf.z*luz_amb.z);
 
 Point3 posicaoObservador(0, 0, 0);
@@ -22,8 +22,8 @@ Point3 posicaoObservador(0, 0, 0);
 void convertDisplayParaJanela(int display_x, int display_y, float &ndc_x,
                          float &ndc_y) {
   // Adiciona 0.5 para obter o centro do pixel
-  ndc_x = wJanela/2.0f - Dx/2.0f - display_x*Dx;
-  ndc_y = -hJanela / 2.0f + Dy/2.0f + display_y*Dy;
+  ndc_x = -wJanela/2.0f + Dx/2.0f + display_x*Dx;
+  ndc_y = hJanela / 2.0f - Dy/2.0f - display_y*Dy;
 }
 
 float raySphereIntersect(const Point3 &origin, const Vector3 &dir,
@@ -76,7 +76,7 @@ int main() {
             raySphereIntersect(posicaoObservador, d, c_esf, rEsfera);
         Vector3 hitPoint(d.x * disc, d.y * disc, d.z * disc);
 
-        Point3 posicaoLuz(10, 0, 8);
+        Point3 posicaoLuz(6, 6, 2);
 
         if (disc > 0.f) {
           Point3 p_int = posicaoObservador+d*disc;
@@ -90,7 +90,7 @@ int main() {
 
           // Iluminação difusa
           Point3 luz_dif(1, 1, 1);
-          Point3 mat_dif(.7, 0, 0);
+          Point3 mat_dif(.75, .05, .85);
           float i_dif = std::max(0.0f, dot(normal, dir_luz));
           Point3 cor_dif(
             luz_dif.x*mat_dif.x*i_dif,
@@ -100,9 +100,9 @@ int main() {
 
           // Intensidade especular
           Point3 luz_esp(1, 1, 1);
-          Point3 mat_esp(.7, 0, 0);
-          int brightness = 100; // nível de espalhamento da luz
-          Vector3 reflection(reflect(dir_luz, normal));
+          Point3 mat_esp(.35, .35, .35);
+          int brightness = 50; // nível de espalhamento da luz
+          Vector3 reflection(reflect(normal, dir_luz));
           float i_esp = pow(std::max(0.0f, dot(reflection, d_inv)), brightness);
           Point3 cor_esp(
             luz_esp.x*mat_esp.x*i_esp,

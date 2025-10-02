@@ -1,5 +1,6 @@
 #ifndef VECTOR3
 #define VECTOR3
+#include <iostream>
 
 class Point3;
 
