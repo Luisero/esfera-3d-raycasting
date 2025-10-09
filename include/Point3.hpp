@@ -10,8 +10,8 @@ public:
   inline void clamp(){
     if(x < 0.0f) x = 0.0f;
     if(x > 1.0f) x = 1.0f;
-    if(y < 0.0f) x = 0.0f;
-    if(y > 1.0f) x = 1.0f;
+    if(y < 0.0f) y = 0.0f;
+    if(y > 1.0f) y = 1.0f;
     if(z < 0.0f) z = 0.0f;
     if(z > 1.0f) z = 1.0f;
   }
@@ -34,6 +34,10 @@ inline Point3 operator-(const Vector3 &o, const Point3 &p) {
 };
 inline Vector3 operator-(const Point3 &p1, const Point3 &p2) {
   return Vector3(p1, p2);
+}
+
+inline Point3 operator*(const Point3 &p, float t) {
+  return { p.x * t, p.y * t, p.z * t };
 }
 
 #endif // !POINT

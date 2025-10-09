@@ -8,10 +8,10 @@ Vector3::Vector3(float x, float y, float z)
     this->z = z;
 }
 
-Vector3::Vector3(const Point3 &o, const Point3 &a){
-    this->x = o.x - a.x;
-    this->y = o.y - a.y;
-    this->z = o.z - a.z;
+Vector3::Vector3(const Point3 &origin, const Point3 &destiny){
+    this->x = destiny.x - origin.x;
+    this->y = destiny.y - origin.y;
+    this->z = destiny.z - origin.z;
 }
 
 Vector3::Vector3()
@@ -33,4 +33,8 @@ void Vector3::normalize()
     this->x = x;
     this->y = y;
     this->z = z;
+}
+
+float Vector3::length(){
+    return std::sqrt(x * x + y * y + z * z);
 }

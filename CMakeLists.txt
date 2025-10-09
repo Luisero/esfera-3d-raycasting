@@ -5,5 +5,7 @@ add_executable(main
         src/main.cpp
         src/Vector3.cpp
         src/Sphere.cpp
-        src/Point3.cpp)
+        src/Point3.cpp
+        src/Object.cpp
+        src/Plain.cpp)
 target_include_directories(main PRIVATE include)
