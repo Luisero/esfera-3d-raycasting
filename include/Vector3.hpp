@@ -11,6 +11,7 @@ public:
   Vector3();
   void normalize();
   float length();
+  const float& operator[](int i) const;
 };
 
 // operadores
@@ -45,8 +46,12 @@ inline float dot(const Vector3 &o, const Vector3 &a) {
   return o.x*a.x + o.y*a.y + o.z*a.z; 
 };
 
+// funções livres
+
 inline Vector3 reflect(const Vector3 &normal, const Vector3 &luz) {
   return 2*dot(normal, luz)*normal-luz;
 }
+
+Vector3 normalize(const Vector3 &o);
 
 #endif

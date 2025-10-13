@@ -14,6 +14,7 @@ Plain::Plain(Point3 &p0, Point3 &p1, Point3 &p2, Point3 &color, Point3 &diffuse_
     Vector3 s1(p0, p1);
     Vector3 s2(p0, p2);
     Vector3 plain_normal(s1.y*s2.z-s1.z*s2.y, s1.z*s2.x-s1.x*s2.z, s1.x*s2.y-s1.y*s2.x);
+    plain_normal.normalize();
     this->normal = plain_normal;
 }
 
@@ -21,19 +22,24 @@ Vector3 Plain::getSurfaceNormal(const Point3 &p_int) const{
     return this->normal;
 }
 
-float Plain::Intersect(const Point3 &origin, const Vector3 &dir) const{
+bool Plain::Intersect(const Point3 &origin, const Vector3 &dir, float t_min, float t_max, HitRecord &hr) const{
     float denominator = dot(this->normal, dir);
 
     if (std::abs(denominator) > 0.0001f) {
         Vector3 p0_to_origin(origin, this->p0);
         float t = dot(p0_to_origin, this->normal) / denominator;
         
-        if (t >= 0) {
-            return t;
-        }
+        if(t > t_min && t < t_max){
+            hr.t = t;
+            hr.p_int = Point3(origin + t*dir);
+            hr.normal = this->normal;
+            hr.obj_ptr = this;
+        } else return false;
+
+        return true;
     }
 
-    return -1.0f;
+    return false;
 }
 
 Point3 Plain::getCenter() const{

@@ -12,24 +12,42 @@ Sphere::Sphere(Point3 &center, float radius, Point3 &color, Point3 &diffuse_colo
     this->specular_color = specular_color;
 }
 
-float Sphere::Intersect(const Point3 &origin, const Vector3 &dir) const{
+bool Sphere::Intersect(const Point3 &origin, const Vector3 &dir, float t_min, float t_max, HitRecord &hr) const{
     Vector3 L(center, origin);
     float b = 2.0f * dot(dir, L);
     float c = dot(L, L) - radius * radius;
 
     float discriminant = b * b - 4.0f * c; // a=1
     if (discriminant < 0)
-        return -1.0f;
+        return false;
 
     float sqrtD = std::sqrt(discriminant);
-    float t1 = (-b - sqrtD) * 0.5f;
-    float t2 = (-b + sqrtD) * 0.5f;
+    float t1 = (-b + sqrtD) * 0.5f;
+    float t2 = (-b - sqrtD) * 0.5f;
 
-    float t = std::min(t1, t2); // pega a interseção menor
-    if (t < 0)
-        return -1.0f; // está atrás do raio
+    // checando se t1 ou t2 estão no limite aceitável
+    // primeiro t2 pq ele é menor (está mais perto do observador)
+    if (t2 > t_min && t2 < t_max){
+        // a distancia ate a colisao
+        hr.t = t2;
+        // o ponto da colisão
+        hr.p_int = Point3(origin + t2*dir);
+        Vector3 normal_ponto(center, hr.p_int);
+        normal_ponto.normalize();
+        hr.normal = normal_ponto;
+        hr.obj_ptr = this;
+    } 
+    else if(t1 > t_min && t1 < t_max) {
+        hr.t = t1;
+        // o ponto da colisão
+        hr.p_int = Point3(origin + t1*dir);
+        Vector3 normal_ponto(center, hr.p_int);
+        normal_ponto.normalize();
+        hr.normal = normal_ponto;
+        hr.obj_ptr = this;
+    } else return false;
 
-    return t;
+    return true;
 }
 
 Vector3 Sphere::getSurfaceNormal(const Point3 &p_int) const {

@@ -30,11 +30,23 @@ void Vector3::normalize()
         y /= length;
         z /= length;
     }
-    this->x = x;
-    this->y = y;
-    this->z = z;
+}
+
+Vector3 normalize(const Vector3 &o) {
+    float length = std::sqrt(o.x * o.x + o.y * o.y + o.z * o.z);
+    if(length != 0.0f){
+        Vector3 unit_vector(o.x/length, o.y/length, o.z/length);
+        return unit_vector;
+    }
+    return o;
 }
 
 float Vector3::length(){
     return std::sqrt(x * x + y * y + z * z);
+}
+
+const float& Vector3::operator[](int i) const {
+    if(i == 0) return this->x;
+    if(i == 1) return this->y;
+    return this->z;
 }
