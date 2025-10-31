@@ -45,6 +45,15 @@ float Vector3::length(){
     return std::sqrt(x * x + y * y + z * z);
 }
 
+Vector3 cross(const Vector3 &s1, const Vector3 &s2) {
+    double x_cross = s1.y*s2.z-s1.z*s2.y;
+    double y_cross = s1.z*s2.x-s1.x*s2.z;
+    double z_cross = s1.x*s2.y-s1.y*s2.x;
+    Vector3 cross_vector(x_cross, y_cross, z_cross);
+
+    return cross_vector;
+}
+
 const float& Vector3::operator[](int i) const {
     if(i == 0) return this->x;
     if(i == 1) return this->y;

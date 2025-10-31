@@ -3,6 +3,8 @@
 #include "../include/Point3.hpp"
 #include "../include/Plain.hpp"
 #include "../include/Cilinder.hpp"
+#include "../include/Cone.hpp"
+#include "../include/models/Snowman.hpp"
 #include <cmath>
 #include <algorithm>
 #include <fstream>
@@ -37,13 +39,13 @@ Point3 dif_esf1(.9, .9, .9);
 Point3 esp_esf1(.3, .3, .3);
 
 float rEsfera2 = .15f;
-Point3 c_esf2(0,0.25, -dJanela-rEsfera2-.03f);
+Point3 c_esf2(0,0.25, -dJanela-rEsfera1);
 Point3 cor_esf2(1, 1, 1);
 Point3 dif_esf2(.9, .9, .9);
 Point3 esp_esf2(.3, .3, .3);
 
 float rEsfera3 = .1f;
-Point3 c_esf3(0, 0.44, -dJanela-rEsfera3-.08f);
+Point3 c_esf3(0, 0.44, -dJanela-rEsfera1);
 Point3 cor_esf3(1, 1, 1);
 Point3 dif_esf3(.9, .9, .9);
 Point3 esp_esf3(.3, .3, .3);
@@ -75,7 +77,7 @@ Point3 dif_plain1(0, 1, 1);
 Point3 esp_plain1(.7, .7, .7);
 
 float rCilindro1 = .02f;
-Point3 c_cilindro1(-0.13, 0.25, -dJanela-rCilindro1-0.15f);
+Point3 c_cilindro1(-0.13, 0.25, -dJanela-rCilindro1-0.16f);
 float h_cilindro1 = 0.2f;
 Vector3 dc_cilindro1(-1, 0.2, 0);
 bool bottom_cilindro1 = true;
@@ -85,7 +87,7 @@ Point3 dif_cilindro1(0.3, .18, 0.02);
 Point3 esp_cilindro1(.3, .3, .3);
 
 float rCilindro2 = 0.02f;
-Point3 c_cilindro2(0.13, 0.25, -dJanela-rCilindro2-0.15f);
+Point3 c_cilindro2(0.13, 0.25, -dJanela-rCilindro2-0.16f);
 float h_cilindro2 = 0.2f;
 Vector3 dc_cilindro2(1, .2, 0);
 bool bottom_cilindro2 = true;
@@ -113,6 +115,53 @@ bool upper_cilindro4 = true;
 Point3 cor_cilindro4(0.3, 0.18, 0.02);
 Point3 dif_cilindro4(0.3, .18, 0.02);
 Point3 esp_cilindro4(.3, .3, .3);
+
+float rCone1 = 0.16f;
+Point3 c_cone1(-.5, 0, -dJanela-rCone1);
+bool has_bottom_cone1 = true;
+Point3 c_vertice1(-.5, .3, -dJanela-rCone1);
+Point3 cor_cone1(0.02, 0.45, 0.09);
+Point3 dif_cone1(0.02, .45, 0.09);
+Point3 esp_cone1(.1, .1, .1);
+
+float rCone2 = 0.16f;
+Point3 c_cone2(-.5, .15, -dJanela-rCone2);
+bool has_bottom_cone2 = true;
+Point3 c_vertice2(-.5, .45, -dJanela-rCone2);
+Point3 cor_cone2(0.02, 0.45, 0.09);
+Point3 dif_cone2(0.02, .45, 0.09);
+Point3 esp_cone2(.1, .1, .1);
+
+float rCone3 = 0.16f;
+Point3 c_cone3(-.5, 0.30, -dJanela-rCone3);
+bool has_bottom_cone3 = true;
+Point3 c_vertice3(-.5, .6, -dJanela-rCone3);
+Point3 cor_cone3(0.02, 0.45, 0.09);
+Point3 dif_cone3(0.02, .45, 0.09);
+Point3 esp_cone3(.1, .1, .1);
+
+float rCone4 = .01f;
+Point3 c_cone4(0, .44, -dJanela-rEsfera1+rEsfera3);
+bool has_bottom_cone4 = true;
+Point3 c_vertice4(0, .44, -dJanela-rEsfera1+rEsfera3+.03f);
+Point3 cor_cone4(0.93, 0.56, 0.12);
+Point3 dif_cone4(0.92, .55, .11);
+Point3 esp_cone4(.1, .1, .1);
+
+float rCilindro5 = 0.04f;
+Point3 c_cilindro5(-.5, -0.2, -dJanela-rCilindro5-0.12f);
+float h_cilindro5 = 0.25f;
+Vector3 dc_cilindro5(0, 1, 0);
+bool bottom_cilindro5 = true;
+bool upper_cilindro5 = true;
+Point3 cor_cilindro5(0.3, 0.18, 0.02);
+Point3 dif_cilindro5(0.3, .18, 0.02);
+Point3 esp_cilindro5(.3, .3, .3);
+
+Point3 snowman1_center(.3, -0.02, -10.18);
+Point3 snowman2_center(0, -0.02, -12.18);
+Point3 snowman3_center(-.5, -0.02, -20.18);
+float snowman_sink_factor = 0.06f;
 
 void convertDisplayParaJanela(int display_x, int display_y, float &ndc_x,
                          float &ndc_y) {
@@ -224,15 +273,23 @@ int main() {
     image << 255 << "\n";
 
     world.push_back(std::make_unique<Plain>(p0, p1, p2, cor_plain1, dif_plain1, esp_plain1));
-    world.push_back(std::make_unique<Sphere>(c_esf3, rEsfera3, cor_esf3, dif_esf3, esp_esf3));
-    world.push_back(std::make_unique<Sphere>(c_esf2, rEsfera2, cor_esf2, dif_esf2, esp_esf2));
-    world.push_back(std::make_unique<Sphere>(c_esf1, rEsfera1, cor_esf1, dif_esf1, esp_esf1));
-    world.push_back(std::make_unique<Sphere>(c_esf4, rEsfera4, cor_esf4, dif_esf4, esp_esf4));
-    world.push_back(std::make_unique<Sphere>(c_esf5, rEsfera5, cor_esf5, dif_esf5, esp_esf5));
-    world.push_back(std::make_unique<Cilinder>(c_cilindro1, h_cilindro1, rCilindro1, dc_cilindro1, bottom_cilindro1, upper_cilindro1, cor_cilindro1, dif_cilindro1, esp_cilindro1));
-    world.push_back(std::make_unique<Cilinder>(c_cilindro2, h_cilindro2, rCilindro2, dc_cilindro2, bottom_cilindro2, upper_cilindro2, cor_cilindro2, dif_cilindro2, esp_cilindro2));
-    world.push_back(std::make_unique<Cilinder>(c_cilindro3, h_cilindro3, rCilindro3, dc_cilindro3, bottom_cilindro3, upper_cilindro3, cor_cilindro3, dif_cilindro3, esp_cilindro3));
-    world.push_back(std::make_unique<Cilinder>(c_cilindro4, h_cilindro4, rCilindro4, dc_cilindro4, bottom_cilindro4, upper_cilindro4, cor_cilindro4, dif_cilindro4, esp_cilindro4));
+    // world.push_back(std::make_unique<Sphere>(c_esf3, rEsfera3, cor_esf3, dif_esf3, esp_esf3));
+    // world.push_back(std::make_unique<Sphere>(c_esf2, rEsfera2, cor_esf2, dif_esf2, esp_esf2));
+    // world.push_back(std::make_unique<Sphere>(c_esf1, rEsfera1, cor_esf1, dif_esf1, esp_esf1));
+    // world.push_back(std::make_unique<Sphere>(c_esf4, rEsfera4, cor_esf4, dif_esf4, esp_esf4));
+    // world.push_back(std::make_unique<Sphere>(c_esf5, rEsfera5, cor_esf5, dif_esf5, esp_esf5));
+    // world.push_back(std::make_unique<Cilinder>(c_cilindro1, h_cilindro1, rCilindro1, dc_cilindro1, bottom_cilindro1, upper_cilindro1, cor_cilindro1, dif_cilindro1, esp_cilindro1));
+    // world.push_back(std::make_unique<Cilinder>(c_cilindro2, h_cilindro2, rCilindro2, dc_cilindro2, bottom_cilindro2, upper_cilindro2, cor_cilindro2, dif_cilindro2, esp_cilindro2));
+    // world.push_back(std::make_unique<Cilinder>(c_cilindro3, h_cilindro3, rCilindro3, dc_cilindro3, bottom_cilindro3, upper_cilindro3, cor_cilindro3, dif_cilindro3, esp_cilindro3));
+    // world.push_back(std::make_unique<Cilinder>(c_cilindro4, h_cilindro4, rCilindro4, dc_cilindro4, bottom_cilindro4, upper_cilindro4, cor_cilindro4, dif_cilindro4, esp_cilindro4));
+    world.push_back(std::make_unique<Cilinder>(c_cilindro5, h_cilindro5, rCilindro5, dc_cilindro5, bottom_cilindro5, upper_cilindro5, cor_cilindro5, dif_cilindro5, esp_cilindro5));
+    world.push_back(std::make_unique<Cone>(c_cone1, rCone1, has_bottom_cone1, c_vertice1, cor_cone1, dif_cone1, esp_cone1));
+    world.push_back(std::make_unique<Cone>(c_cone2, rCone2, has_bottom_cone2, c_vertice2, cor_cone2, dif_cone2, esp_cone2));
+    world.push_back(std::make_unique<Cone>(c_cone3, rCone3, has_bottom_cone3, c_vertice3, cor_cone3, dif_cone3, esp_cone3));
+    //world.push_back(std::make_unique<Cone>(c_cone4, rCone4, has_bottom_cone4, c_vertice4, cor_cone4, dif_cone4, esp_cone4));
+    world.push_back(std::make_unique<Snowman>(snowman1_center, snowman_sink_factor));
+    world.push_back(std::make_unique<Snowman>(snowman2_center, snowman_sink_factor));
+    world.push_back(std::make_unique<Snowman>(snowman3_center, snowman_sink_factor));
 
     raycast(image, 0, 0, nCol, nLin);
 

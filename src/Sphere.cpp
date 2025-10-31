@@ -3,7 +3,7 @@
 #include "../include/Vector3.hpp"
 #include <cmath>
 
-Sphere::Sphere(Point3 &center, float radius, Point3 &color, Point3 &diffuse_color, Point3 &specular_color)
+Sphere::Sphere(const Point3 &center, float radius, const Point3 &color, const Point3 &diffuse_color, const Point3 &specular_color)
 {
     this->center = center;
     this->radius = radius;
@@ -51,6 +51,6 @@ bool Sphere::Intersect(const Point3 &origin, const Vector3 &dir, float t_min, fl
 }
 
 Vector3 Sphere::getSurfaceNormal(const Point3 &p_int) const {
-    Vector3 surface_normal(this->getCenter(), p_int);
+    Vector3 surface_normal(this->color, p_int);
     return surface_normal;
 }

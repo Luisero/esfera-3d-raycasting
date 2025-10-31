@@ -3,22 +3,6 @@
 #include <vector>
 #include <cmath>
 
-Point3 Cilinder::getCenter() const {
-    return this->center;
-}
-
-Point3 Cilinder::getColor() const {
-    return this->color;
-}
-
-Point3 Cilinder::getDiffuse() const {
-    return this->diffuse_color;
-}
-
-Point3 Cilinder::getSpecular() const {
-    return this->specular_color;
-}
-
 Cilinder::Cilinder(Point3 &c_base, float height, float radius, Vector3 &dc, bool bottom_lid, bool upper_lid, Point3 &color, Point3 &dif_color, Point3 &esp_color) {
     this->center = c_base;
     this->height = height;

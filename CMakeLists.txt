@@ -8,5 +8,7 @@ add_executable(main
         src/Point3.cpp
         src/Object.cpp
         src/Plain.cpp
-        src/Cilinder.cpp)
+        src/Cilinder.cpp
+        src/Cone.cpp
+        src/models/Snowman.cpp)
 target_include_directories(main PRIVATE include)

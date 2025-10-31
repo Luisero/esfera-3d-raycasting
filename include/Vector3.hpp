@@ -53,5 +53,6 @@ inline Vector3 reflect(const Vector3 &normal, const Vector3 &luz) {
 }
 
 Vector3 normalize(const Vector3 &o);
+Vector3 cross(const Vector3 &s1, const Vector3 &s2);
 
 #endif

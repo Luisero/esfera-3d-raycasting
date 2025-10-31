@@ -13,7 +13,8 @@ Plain::Plain(Point3 &p0, Point3 &p1, Point3 &p2, Point3 &color, Point3 &diffuse_
 
     Vector3 s1(p0, p1);
     Vector3 s2(p0, p2);
-    Vector3 plain_normal(s1.y*s2.z-s1.z*s2.y, s1.z*s2.x-s1.x*s2.z, s1.x*s2.y-s1.y*s2.x);
+    //Vector3 plain_normal(s1.y*s2.z-s1.z*s2.y, s1.z*s2.x-s1.x*s2.z, s1.x*s2.y-s1.y*s2.x);
+    Vector3 plain_normal = cross(s1, s2);
     plain_normal.normalize();
     this->normal = plain_normal;
 }
@@ -40,20 +41,4 @@ bool Plain::Intersect(const Point3 &origin, const Vector3 &dir, float t_min, flo
     }
 
     return false;
-}
-
-Point3 Plain::getCenter() const{
-    return this->p0;
-}
-
-Point3 Plain::getColor() const {
-    return this->color;
-}
-
-Point3 Plain::getDiffuse() const {
-    return this->diffuse_color;
-}
-
-Point3 Plain::getSpecular() const {
-    return this->specular_color;
 }
